@@ -1,0 +1,35 @@
+{
+  "note": "Hand-written fake issues. Clusters 1-14 are true duplicates; 15-22 are look-alikes that are NOT duplicates.",
+  "issues": [
+    {"id": 1, "title": "Mail sync hangs on large mailbox", "description": "Sync never finishes when the mailbox has more than 50000 messages"},
+    {"id": 2, "title": "Mailbox synchronization stuck at 99 percent", "description": "Syncing a big mailbox freezes at 99 percent and never completes"},
+    {"id": 3, "title": "Sync spinner never stops for large mailboxes", "description": "Spinner keeps running forever while syncing a mailbox with thousands of messages"},
+    {"id": 4, "title": "Calendar invite shows wrong time zone", "description": "Invites display one hour off after the daylight saving change"},
+    {"id": 5, "title": "Meeting invitation time off by one hour", "description": "Time of a meeting invitation is shifted one hour after the daylight saving time switch"},
+    {"id": 6, "title": "App crashes when opening PDF attachment", "description": "Opening a PDF attachment closes the app immediately"},
+    {"id": 7, "title": "Crash on tapping attachment preview for PDF", "description": "Tapping the preview of a PDF attachment crashes the application"},
+    {"id": 8, "title": "PDF attachment open causes crash to home screen", "description": "App quits to the home screen when a PDF attachment is opened"},
+    {"id": 9, "title": "Search ignores accented characters", "description": "Searching for cafe does not find messages containing the word café"},
+    {"id": 10, "title": "Accented letters not matched in search", "description": "A query with accents or without accents returns different results, café versus cafe"},
+    {"id": 11, "title": "Dark mode makes compose text unreadable", "description": "Black text on dark background in the compose window when dark mode is enabled"},
+    {"id": 12, "title": "Unreadable body text in compose view with dark theme", "description": "Dark theme compose body is dark grey on black, cannot read what I type"},
+    {"id": 13, "title": "Login fails with expired password but shows generic error", "description": "Expired password gives the message something went wrong, not a password expired message"},
+    {"id": 14, "title": "Unhelpful error when password has expired", "description": "A user with an expired password sees a generic error instead of being asked to reset it"},
+    {"id": 15, "title": "Mail sync battery drain overnight", "description": "Background sync uses a lot of battery while the phone is idle at night"},
+    {"id": 16, "title": "Calendar widget shows wrong colour for birthdays", "description": "Birthday events appear in blue instead of the configured pink"},
+    {"id": 17, "title": "App crashes when rotating device during compose", "description": "Rotating the screen while writing a message crashes the app"},
+    {"id": 18, "title": "Search suggestions are slow", "description": "Typing in the search field shows suggestions only after three seconds"},
+    {"id": 19, "title": "Dark mode icon missing in settings", "description": "The settings page has no icon for the dark mode option"},
+    {"id": 20, "title": "Login screen logo is blurry", "description": "The logo on the login page looks blurry on high resolution displays"},
+    {"id": 21, "title": "Attachment size limit not shown", "description": "Users are not told the maximum attachment size before uploading"},
+    {"id": 22, "title": "Invite reply buttons overlap on small screens", "description": "Accept and decline buttons overlap in the invitation view on a small display"}
+  ],
+  "duplicate_pairs": [
+    [1, 2], [1, 3], [2, 3],
+    [4, 5],
+    [6, 7], [6, 8], [7, 8],
+    [9, 10],
+    [11, 12],
+    [13, 14]
+  ]
+}

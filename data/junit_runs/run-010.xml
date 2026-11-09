@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuite name="demo" tests="12" failures="5">
+    <testcase classname="tests.test_login" name="test_valid_login" time="0.182"></testcase>
+    <testcase classname="tests.test_login" name="test_wrong_password" time="0.233"></testcase>
+    <testcase classname="tests.test_search" name="test_search_by_title" time="0.353"></testcase>
+    <testcase classname="tests.test_search" name="test_search_is_case_insensitive" time="0.323"><failure message="AssertionError: expected true (BUG-003)">AssertionError: expected true (BUG-003)</failure></testcase>
+    <testcase classname="tests.test_sync" name="test_large_mailbox_sync" time="2.739"><failure message="AssertionError: expected true">AssertionError: expected true</failure></testcase>
+    <testcase classname="tests.test_sync" name="test_sync_after_reconnect" time="1.654"><failure message="AssertionError: expected true">AssertionError: expected true</failure></testcase>
+    <testcase classname="tests.test_ui" name="test_attachment_preview" time="1.235"></testcase>
+    <testcase classname="tests.test_workflow" name="test_cannot_close_without_verify" time="0.256"><failure message="AssertionError: expected true">AssertionError: expected true</failure></testcase>
+    <testcase classname="tests.test_calendar" name="test_invite_time_zone" time="0.567"></testcase>
+    <testcase classname="tests.test_calendar" name="test_recurring_invite" time="0.809"></testcase>
+    <testcase classname="tests.test_compose" name="test_dark_mode_text" time="0.596"><failure message="AssertionError: expected true">AssertionError: expected true</failure></testcase>
+    <testcase classname="tests.test_compose" name="test_send_message" time="0.531"></testcase>
+</testsuite>

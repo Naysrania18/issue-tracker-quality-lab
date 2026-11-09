@@ -1,0 +1,11 @@
+{
+  "note": "Fake snapshot of the issue list for a release candidate. Used by the CI release-readiness gate.",
+  "issues": [
+    {"id": 101, "title": "Sync stalls on large mailbox", "description": "", "priority": "P1", "state": "Closed", "duplicate_of": null},
+    {"id": 102, "title": "Invite time off by one hour", "description": "", "priority": "P2", "state": "Closed", "duplicate_of": null},
+    {"id": 103, "title": "Search ignores accents", "description": "", "priority": "P2", "state": "Verify", "duplicate_of": null},
+    {"id": 104, "title": "Dark mode compose text colour", "description": "", "priority": "P3", "state": "Build", "duplicate_of": null},
+    {"id": 105, "title": "Logo blurry on login", "description": "", "priority": "P4", "state": "Analyze", "duplicate_of": null},
+    {"id": 106, "title": "Invite time shifted", "description": "", "priority": "P2", "state": "Analyze", "duplicate_of": 102}
+  ]
+}
