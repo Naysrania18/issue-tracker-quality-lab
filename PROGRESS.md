@@ -1,7 +1,7 @@
 # PROGRESS
 
 - [x] Stage 1 - Setup
-- [ ] Stage 2 - Demo issue tracker
+- [x] Stage 2 - Demo issue tracker
 - [ ] Stage 3 - Core tests
 - [ ] Stage 4 - qtools
 - [ ] Stage 5 - MCP server + agent
@@ -13,4 +13,4 @@
 - [ ] Safety check + publish
 - [ ] Final report
 
-NEXT STEP: Stage 2 - build FastAPI app in app/.
+NEXT STEP: Stage 3 - pytest suite in tests/, SQL checks in sql/.

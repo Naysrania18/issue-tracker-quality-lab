@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Demo Issue Tracker{% endblock %}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; background: #f5f6f8; color: #1d2330; }
+    header { background: #1d2330; color: #fff; padding: 10px 24px; display: flex; gap: 20px; align-items: center; }
+    header a { color: #cfe3ff; text-decoration: none; }
+    main { max-width: 980px; margin: 24px auto; background: #fff; padding: 24px; border-radius: 8px; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #e3e6ec; }
+    input, select, textarea { padding: 6px; margin: 2px 0; font: inherit; }
+    textarea { width: 100%; }
+    .error { background: #fde8e8; color: #8a1c1c; padding: 8px 12px; border-radius: 4px; }
+    .badge { padding: 1px 8px; border-radius: 10px; background: #e3e6ec; font-size: 0.85em; }
+    .P1 { background: #f8c9c9; } .P2 { background: #fde0b8; }
+    .demo { font-size: 0.8em; opacity: .8; }
+  </style>
+</head>
+<body>
+<header>
+  <strong>Demo Issue Tracker</strong>
+  <span class="demo">(practice system, fake data)</span>
+  {% if user %}
+  <a id="nav-issues" href="/issues">Issues</a>
+  <a id="nav-new" href="/issues/new">New issue</a>
+  <span style="flex:1"></span>
+  <span id="current-user">{{ user.username }} ({{ user.role }})</span>
+  <a id="logout" href="/logout">Log out</a>
+  {% endif %}
+</header>
+<main>{% block content %}{% endblock %}</main>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Issue {{ issue.id }}{% endblock %}
+{% block content %}
+{% if error %}<p class="error" id="action-error">{{ error }}</p>{% endif %}
+<h1><span id="issue-id">#{{ issue.id }}</span> <span id="issue-title">{{ issue.title }}</span></h1>
+<p>
+  State: <strong id="issue-state">{{ issue.state }}</strong> |
+  Priority: <span id="issue-priority" class="badge {{ issue.priority }}">{{ issue.priority }}</span> |
+  Component: <span id="issue-component">{{ issue.component }}</span> |
+  Reporter: {{ issue.reporter }} | Assignee: {{ issue.assignee or "unassigned" }}
+</p>
+{% if issue.duplicate_of %}<p id="duplicate-note">Duplicate of <a href="/issues/{{ issue.duplicate_of }}">#{{ issue.duplicate_of }}</a></p>{% endif %}
+
+<h3>Description</h3>
+{# PLANTED-DEFECT-5: |safe disables HTML escaping, so markup typed into a description is rendered. #}
+<div id="issue-description">{{ issue.description|safe }}</div>
+<h3>Steps to reproduce</h3><pre id="issue-steps">{{ issue.steps_to_reproduce }}</pre>
+<h3>Expected / actual</h3>
+<p>Expected: <span id="issue-expected">{{ issue.expected_result }}</span></p>
+<p>Actual: <span id="issue-actual">{{ issue.actual_result }}</span></p>
+
+{% if user.role != "reporter" %}
+<h3>Workflow</h3>
+<form method="post" action="/issues/{{ issue.id }}/transition" id="transition-form">
+  <select id="transition-target" name="target">
+    {% for s in ["Analyze","Integrate","Build","Verify","Closed"] %}<option value="{{ s }}">{{ s }}</option>{% endfor %}
+  </select>
+  <button id="transition-submit" type="submit">Move</button>
+</form>
+<h3>Mark as duplicate</h3>
+<form method="post" action="/issues/{{ issue.id }}/duplicate" id="duplicate-form">
+  <input id="duplicate-of" name="duplicate_of" type="number" min="1" placeholder="Original issue id" required>
+  <button id="duplicate-submit" type="submit">Mark duplicate</button>
+</form>
+{% endif %}
+
+<h3>Comments</h3>
+<ul id="comment-list">
+  {% for c in comments %}<li class="comment"><strong>{{ c.author }}</strong>: {{ c.body }}</li>{% endfor %}
+</ul>
+<form method="post" action="/issues/{{ issue.id }}/comment" id="comment-form">
+  <textarea id="comment-body" name="body" rows="2"></textarea><br>
+  <button id="comment-submit" type="submit">Add comment</button>
+</form>
+
+<h3>History</h3>
+<table id="history-table">
+  {% for h in history %}
+  <tr><td>{{ h.at }}</td><td>{{ h.actor }}</td><td>{{ h.field }}</td><td>{{ h.old_value }} &rarr; {{ h.new_value }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

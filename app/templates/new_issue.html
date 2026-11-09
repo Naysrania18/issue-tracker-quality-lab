@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}New issue{% endblock %}
+{% block content %}
+<h1>New issue</h1>
+{% if error %}<p class="error" id="form-error">{{ error }}</p>{% endif %}
+<form method="post" action="/issues/new" id="new-issue-form">
+  <p><label>Title<br><input id="title" name="title" size="60" required></label></p>
+  <p><label>Component<br>
+    <select id="component" name="component">
+      {% for c in components %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+    </select></label>
+    <label>Priority
+    <select id="priority" name="priority">
+      {% for p in ["P1","P2","P3","P4"] %}<option value="{{ p }}" {% if p == "P3" %}selected{% endif %}>{{ p }}</option>{% endfor %}
+    </select></label></p>
+  <p><label>Description<br><textarea id="description" name="description" rows="3"></textarea></label></p>
+  <p><label>Steps to reproduce<br><textarea id="steps" name="steps_to_reproduce" rows="3"></textarea></label></p>
+  <p><label>Expected result<br><textarea id="expected" name="expected_result" rows="2"></textarea></label></p>
+  <p><label>Actual result<br><textarea id="actual" name="actual_result" rows="2"></textarea></label></p>
+  <button id="create-submit" type="submit">Create issue</button>
+</form>
+{% endblock %}

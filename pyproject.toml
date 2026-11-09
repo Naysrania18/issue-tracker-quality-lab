@@ -1,0 +1,27 @@
+[project]
+name = "issue-tracker-quality-lab"
+version = "1.0.0"
+description = "Demo issue tracker plus the quality tooling built around it"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "qtools_tests", "mcp_tests"]
+markers = [
+    "smoke: fast checks that must always pass",
+    "regression: broader checks",
+    "ui: Selenium browser tests",
+    "sql: data integrity checks",
+]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 110
+extend-exclude = [".venv", "java-api-tests", "swift-client"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+ignore = ["B008"]  # FastAPI uses Depends() in argument defaults
+
+[tool.mypy]
+ignore_missing_imports = true
+files = ["app", "qtools", "mcp_server", "agent"]

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Issues{% endblock %}
+{% block content %}
+<h1>Issues</h1>
+<form method="get" action="/issues" id="filter-form">
+  <input id="search-q" name="q" placeholder="Search title or description" value="{{ q }}">
+  <select id="filter-state" name="state">
+    <option value="">Any state</option>
+    {% for s in ["Analyze","Integrate","Build","Verify","Closed"] %}
+    <option value="{{ s }}" {% if s == state %}selected{% endif %}>{{ s }}</option>
+    {% endfor %}
+  </select>
+  <select id="filter-priority" name="priority">
+    <option value="">Any priority</option>
+    {% for p in ["P1","P2","P3","P4"] %}
+    <option value="{{ p }}" {% if p == priority %}selected{% endif %}>{{ p }}</option>
+    {% endfor %}
+  </select>
+  <select id="filter-component" name="component">
+    <option value="">Any component</option>
+    {% for c in components %}
+    <option value="{{ c }}" {% if c == component %}selected{% endif %}>{{ c }}</option>
+    {% endfor %}
+  </select>
+  <button id="search-submit" type="submit">Search</button>
+</form>
+<p id="result-count">{{ issues|length }} issue(s)</p>
+<table id="issue-table">
+  <thead><tr><th>ID</th><th>Title</th><th>Component</th><th>Priority</th><th>State</th></tr></thead>
+  <tbody>
+  {% for i in issues %}
+  <tr class="issue-row">
+    <td>{{ i.id }}</td>
+    <td><a class="issue-link" href="/issues/{{ i.id }}">{{ i.title }}</a></td>
+    <td>{{ i.component }}</td>
+    <td><span class="badge {{ i.priority }}">{{ i.priority }}</span></td>
+    <td>{{ i.state }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
