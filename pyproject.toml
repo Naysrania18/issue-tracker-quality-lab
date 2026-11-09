@@ -15,7 +15,7 @@ markers = [
 addopts = "-ra"
 
 [tool.ruff]
-line-length = 110
+line-length = 120
 extend-exclude = [".venv", "java-api-tests", "swift-client"]
 
 [tool.ruff.lint]
@@ -24,4 +24,9 @@ ignore = ["B008"]  # FastAPI uses Depends() in argument defaults
 
 [tool.mypy]
 ignore_missing_imports = true
+explicit_package_bases = true
 files = ["app", "qtools", "mcp_server", "agent"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501"]
+"*_tests/*" = ["E501"]

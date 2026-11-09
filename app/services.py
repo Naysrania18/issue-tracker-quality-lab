@@ -276,7 +276,7 @@ class IssueService:
         try:
             target_state = State(target)
         except ValueError:
-            raise InvalidTransition(f"Unknown state '{target}'")
+            raise InvalidTransition(f"Unknown state '{target}'") from None
         if actor["role"] == "reporter":
             raise Forbidden("Reporters cannot change issue state")
         current = State(row["state"])

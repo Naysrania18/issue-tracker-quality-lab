@@ -4,11 +4,26 @@ from typing import Optional
 from fastapi import APIRouter, Depends
 
 from app.deps import (
-    current_user, get_db, get_issue_service, get_test_service, get_user_service, require_roles,
+    current_user,
+    get_db,
+    get_issue_service,
+    get_test_service,
+    get_user_service,
+    require_roles,
 )
 from app.schemas import (
-    CommentCreate, ComponentCreate, DuplicateRequest, IssueCreate, IssueUpdate, LoginRequest,
-    SuiteCreate, TestCaseCreate, TestResultCreate, TestRunCreate, TransitionRequest, UserCreate,
+    CommentCreate,
+    ComponentCreate,
+    DuplicateRequest,
+    IssueCreate,
+    IssueUpdate,
+    LoginRequest,
+    SuiteCreate,
+    TestCaseCreate,
+    TestResultCreate,
+    TestRunCreate,
+    TransitionRequest,
+    UserCreate,
 )
 from app.services import ComponentService
 
