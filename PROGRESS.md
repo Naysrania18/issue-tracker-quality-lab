@@ -5,7 +5,7 @@
 - [x] Stage 3 - Core tests
 - [x] Stage 4 - qtools
 - [x] Stage 5 - MCP server + agent
-- [ ] Stage 6 - Selenium
+- [x] Stage 6 - Selenium
 - [ ] Stage 7 - Java API tests
 - [ ] Stage 8 - Swift client
 - [ ] Stage 9 - CI/CD
@@ -13,4 +13,4 @@
 - [ ] Safety check + publish
 - [ ] Final report
 
-NEXT STEP: Stage 6 - Selenium UI tests in ui_tests/ (Chrome exists locally).
+NEXT STEP: Stage 7 - Java API tests in java-api-tests/ (Maven not installed locally; verify via CI).
