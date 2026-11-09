@@ -4,7 +4,7 @@
 - [x] Stage 2 - Demo issue tracker
 - [x] Stage 3 - Core tests
 - [x] Stage 4 - qtools
-- [ ] Stage 5 - MCP server + agent
+- [x] Stage 5 - MCP server + agent
 - [ ] Stage 6 - Selenium
 - [ ] Stage 7 - Java API tests
 - [ ] Stage 8 - Swift client
@@ -13,4 +13,4 @@
 - [ ] Safety check + publish
 - [ ] Final report
 
-NEXT STEP: Stage 5 - MCP server in mcp_server/, agent in agent/.
+NEXT STEP: Stage 6 - Selenium UI tests in ui_tests/ (Chrome exists locally).
