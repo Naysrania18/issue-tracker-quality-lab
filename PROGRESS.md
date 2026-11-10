@@ -8,9 +8,9 @@
 - [x] Stage 6 - Selenium
 - [x] Stage 7 - Java API tests
 - [x] Stage 8 (written; compiled only in CI) - Swift client
-- [ ] Stage 9 - CI/CD
-- [ ] Stage 10 - Docs
-- [ ] Safety check + publish
+- [x] Stage 9 (all 5 CI jobs green) - CI/CD
+- [x] Stage 10 - Docs
+- [x] Safety check + publish (public repo live)
 - [ ] Final report
 
-NEXT STEP: Stage 9 - GitHub Actions workflow + Jenkinsfile; then verify Swift compiles in CI.
+NEXT STEP: confirm CI green after docs push, then write FINAL-REPORT.md.
