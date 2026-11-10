@@ -7,10 +7,10 @@
 - [x] Stage 5 - MCP server + agent
 - [x] Stage 6 - Selenium
 - [x] Stage 7 - Java API tests
-- [ ] Stage 8 - Swift client
+- [x] Stage 8 (written; compiled only in CI) - Swift client
 - [ ] Stage 9 - CI/CD
 - [ ] Stage 10 - Docs
 - [ ] Safety check + publish
 - [ ] Final report
 
-NEXT STEP: Stage 8 - Swift package in swift-client/ (no local Swift; verify in CI).
+NEXT STEP: Stage 9 - GitHub Actions workflow + Jenkinsfile; then verify Swift compiles in CI.
