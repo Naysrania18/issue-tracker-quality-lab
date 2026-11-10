@@ -5,3 +5,4 @@
 - GitHub user: Naysrania18.
 - MCP SDK installed is 2.x: uses mcp.server.mcpserver.MCPServer (renamed from FastMCP). requirements pin mcp>=2 to match.
 - Local Maven: portable Maven 3.9.9 unzipped to S:/Git Hub Clone project/_tools (outside repo, cache on S:). Java suite verified locally: 66 pass, 4 known-defect tests fail as designed. Allure runs without AspectJ agent (results + REST attachments only).
+- detect-secrets flags only intentionally fake demo/test passwords (demo-pass, test-pass, ui-pass...). No real secrets.
