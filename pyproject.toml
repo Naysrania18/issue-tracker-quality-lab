@@ -6,6 +6,7 @@ requires-python = ">=3.10"
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "qtools_tests", "mcp_tests"]
+pythonpath = ["."]
 markers = [
     "smoke: fast checks that must always pass",
     "regression: broader checks",

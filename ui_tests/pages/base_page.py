@@ -1,4 +1,5 @@
 """Base class for page objects: all waiting is explicit, there are no sleeps."""
+from selenium.common.exceptions import StaleElementReferenceException, WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
@@ -34,7 +35,24 @@ class BasePage:
         """Click a submit button, then wait until the old page is gone (its anchor element goes stale)."""
         anchor = self.find(anchor_id)
         self.click(element_id)
-        self.wait.until(ec.staleness_of(anchor))
+        self.wait.until(lambda _driver: self._is_gone(anchor))
+
+    @staticmethod
+    def _is_gone(element: WebElement) -> bool:
+        """True once the element belongs to a page that has been replaced.
+
+        Older Chrome raises StaleElementReferenceException; newer Chrome reports
+        "Node with given id does not belong to the document". Both mean the same thing.
+        """
+        try:
+            element.is_enabled()
+            return False
+        except StaleElementReferenceException:
+            return True
+        except WebDriverException as exc:
+            if "does not belong to the document" in str(exc):
+                return True
+            raise
 
     def choose(self, element_id: str, visible_text: str) -> None:
         Select(self.find(element_id)).select_by_visible_text(visible_text)

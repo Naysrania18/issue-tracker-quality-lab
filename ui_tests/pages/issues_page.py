@@ -15,7 +15,7 @@ class IssuesPage(BasePage):
             self.choose("filter-state", state)
         if priority:
             self.choose("filter-priority", priority)
-        self.click("search-submit")
+        self.click_and_wait_for_reload("search-submit", "result-count")
         self.find("result-count")
         return self
 
