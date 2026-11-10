@@ -11,6 +11,6 @@
 - [x] Stage 9 (all 5 CI jobs green) - CI/CD
 - [x] Stage 10 - Docs
 - [x] Safety check + publish (public repo live)
-- [ ] Final report
+- [x] Final report
 
-NEXT STEP: confirm CI green after docs push, then write FINAL-REPORT.md.
+NEXT STEP: none - project complete.
