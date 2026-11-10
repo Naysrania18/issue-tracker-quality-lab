@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!-- Default suite: behaviour that is expected to work. Known-defect tests live in testng-known-defects.xml. -->
+<suite name="Issue tracker API tests" verbose="1">
+  <test name="Stable API behaviour">
+    <packages>
+      <package name="com.qualitylab.api.tests"/>
+    </packages>
+  </test>
+</suite>

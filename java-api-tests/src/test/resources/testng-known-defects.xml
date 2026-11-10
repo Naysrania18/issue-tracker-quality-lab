@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!--
+  Tests that expose the planted bugs (docs/planted-defects.md). They are EXPECTED TO FAIL until the bugs
+  are fixed, so they are not part of the default build. Run with:
+      mvn test -Dsuite.file=testng-known-defects.xml
+-->
+<suite name="Known defects" verbose="1">
+  <test name="Planted defects">
+    <classes>
+      <class name="com.qualitylab.api.defects.KnownDefectsTest"/>
+    </classes>
+  </test>
+</suite>
