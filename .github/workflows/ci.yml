@@ -1,0 +1,185 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  COVERAGE_THRESHOLD: "85"
+
+jobs:
+  python-lint-and-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt -r requirements-dev.txt
+      - name: Lint (ruff)
+        run: ruff check .
+      - name: Type check (mypy)
+        run: mypy app qtools mcp_server agent
+      - name: Smoke tests (gate - none may fail)
+        run: pytest -m smoke -q
+      - name: Full test suite with coverage gate
+        run: >
+          pytest -q
+          --junitxml=reports/junit/run-001.xml
+          --cov=app --cov=qtools --cov=mcp_server --cov=agent
+          --cov-report=xml:reports/coverage.xml
+          --cov-report=html:reports/htmlcov
+          --cov-fail-under=${COVERAGE_THRESHOLD}
+      - name: Upload Python reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-reports
+          path: reports/
+          if-no-files-found: warn
+
+  selenium-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - name: Show Chrome version
+        run: google-chrome --version
+      - name: Selenium smoke tests (gate)
+        run: pytest ui_tests -m smoke -q
+      - name: Selenium full run
+        run: pytest ui_tests -v --junitxml=reports/ui-junit.xml
+      - name: Upload UI reports and failure screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-reports
+          path: |
+            reports/ui-junit.xml
+            screenshots/
+          if-no-files-found: ignore
+
+  java-api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+          cache-dependency-path: java-api-tests/pom.xml
+      - run: pip install -r requirements.txt
+      - name: Start the tracker
+        run: |
+          TRACKER_DB="$RUNNER_TEMP/ci.db" nohup python -m uvicorn app.main:app --port 8000 --log-level warning \
+            > "$RUNNER_TEMP/uvicorn.log" 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:8000/api/health; then echo " tracker is up"; exit 0; fi
+            sleep 1
+          done
+          cat "$RUNNER_TEMP/uvicorn.log"
+          exit 1
+      - name: Run Maven tests (TestNG + RestAssured + Allure)
+        working-directory: java-api-tests
+        run: mvn -B test
+      - name: Upload Allure results and surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-allure-results
+          path: |
+            java-api-tests/target/allure-results
+            java-api-tests/target/surefire-reports
+          if-no-files-found: warn
+
+  swift-xctest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "5.10"
+      - name: Build
+        working-directory: swift-client
+        run: swift build
+      - name: XCTest
+        working-directory: swift-client
+        run: swift test --xunit-output ../swift-xunit.xml
+      - name: Upload Swift test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swift-reports
+          path: |
+            swift-xunit.xml
+            swift-xunit-swift-testing.xml
+          if-no-files-found: ignore
+
+  quality-report:
+    needs: python-lint-and-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-reports
+          path: reports
+      - name: Release readiness gate (fails on NO-GO)
+        run: >
+          python -m qtools readiness
+          --junit-dir reports/junit
+          --issues-file data/release_candidate_issues.json
+          --coverage-xml reports/coverage.xml
+          --out-dir reports/readiness
+          --fail-on-no-go
+      - name: Demo - what a NO-GO looks like (planted defects are open P1s)
+        run: |
+          python -m app.seed --db "$RUNNER_TEMP/demo.db" --issues 30
+          python -m qtools readiness --junit-dir data/junit_runs --db "$RUNNER_TEMP/demo.db" \
+            --coverage 70 --out-dir reports/readiness-demo-no-go || true
+      - name: Flaky and suite-health reports on the sample run history
+        run: |
+          python -m qtools flaky data/junit_runs > reports/flaky.md
+          python -m qtools health data/junit_runs > reports/suite-health.md
+          python -m qtools duplicates-eval > reports/duplicate-finder-eval.txt
+      - name: Upload quality reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-reports
+          path: |
+            reports/readiness
+            reports/readiness-demo-no-go
+            reports/flaky.md
+            reports/suite-health.md
+            reports/duplicate-finder-eval.txt
+          if-no-files-found: warn
